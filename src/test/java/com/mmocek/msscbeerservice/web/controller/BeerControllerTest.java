@@ -1,6 +1,7 @@
 package com.mmocek.msscbeerservice.web.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mmocek.msscbeerservice.bootstrap.BeerLoader;
 import com.mmocek.msscbeerservice.services.BeerService;
 import com.mmocek.msscbeerservice.web.model.BeerDto;
 import com.mmocek.msscbeerservice.web.model.BeerStyleEnum;
@@ -61,7 +62,7 @@ class BeerControllerTest {
         return BeerDto.builder()
                 .beerName("Harnaś")
                 .price(new BigDecimal("2.99"))
-                .upc("0123")
+                .upc(BeerLoader.BEER_1_UPC)
                 .beerStyle(BeerStyleEnum.PILSNER)
                 .build();
     }
