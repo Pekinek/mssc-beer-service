@@ -1,11 +1,13 @@
 package com.mmocek.msscbeerservice.web.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.mmocek.msscbeerservice.services.BeerService;
 import com.mmocek.msscbeerservice.web.model.BeerDto;
 import com.mmocek.msscbeerservice.web.model.BeerStyleEnum;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -20,6 +22,9 @@ class BeerControllerTest {
 
     @Autowired
     MockMvc mockMvc;
+
+    @MockBean
+    BeerService beerService;
 
     @Autowired
     ObjectMapper objectMapper;
@@ -56,7 +61,7 @@ class BeerControllerTest {
         return BeerDto.builder()
                 .beerName("Harnaś")
                 .price(new BigDecimal("2.99"))
-                .upc(123L)
+                .upc("0123")
                 .beerStyle(BeerStyleEnum.PILSNER)
                 .build();
     }

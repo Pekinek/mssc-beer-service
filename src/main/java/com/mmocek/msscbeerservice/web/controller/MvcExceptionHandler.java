@@ -19,4 +19,10 @@ public class MvcExceptionHandler {
         e.getConstraintViolations().forEach(error -> errorList.add(error.toString()));
         return new ResponseEntity<>(errorList, HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<List<String>> notFound(NotFoundException e){
+
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 }
