@@ -28,4 +28,8 @@ public class BeerPagedList extends PageImpl<BeerDto> {
     public BeerPagedList(List<BeerDto> content) {
         super(content);
     }
+
+    public BeerPagedList(List<BeerDto> beerDtos, PageRequest pageRequest, long totalElements) {
+        super(beerDtos, pageRequest, totalElements);
+    }
 }

@@ -5,10 +5,18 @@ import com.mmocek.msscbeerservice.repositories.BeerRepository;
 import com.mmocek.msscbeerservice.web.controller.NotFoundException;
 import com.mmocek.msscbeerservice.web.mapper.BeerMapper;
 import com.mmocek.msscbeerservice.web.model.BeerDto;
+import com.mmocek.msscbeerservice.web.model.BeerPagedList;
+import com.mmocek.msscbeerservice.web.model.BeerStyleEnum;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
+import org.springframework.util.StringUtils;
 
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -17,6 +25,27 @@ public class BeerService {
     private final BeerRepository beerRepository;
 
     private final BeerMapper beerMapper;
+
+    public BeerPagedList listBeers(String beerName, BeerStyleEnum beerStyle, PageRequest pageRequest) {
+        Page<Beer> beerPage = getBeerPage(beerName, beerStyle, pageRequest);
+        List<BeerDto> beerDtos =
+                beerPage.getContent().stream().map(beerMapper::beerToBeerDto).collect(Collectors.toList());
+        return new BeerPagedList(beerDtos, PageRequest.of(beerPage.getPageable().getPageNumber(),
+                beerPage.getPageable().getPageSize()), beerPage.getTotalElements());
+    }
+
+    private Page<Beer> getBeerPage(String beerName, BeerStyleEnum beerStyle, PageRequest pageRequest) {
+
+        if (StringUtils.hasText(beerName) && !ObjectUtils.isEmpty(beerStyle)) {
+            return beerRepository.findAllByBeerNameAndBeerStyle(beerName, beerStyle, pageRequest);
+        } else if (StringUtils.hasText(beerName)) {
+            return beerRepository.findAllByBeerName(beerName, pageRequest);
+        } else if (!ObjectUtils.isEmpty(beerStyle)) {
+            return beerRepository.findAllByBeerStyle(beerStyle, pageRequest);
+        } else {
+            return beerRepository.findAll(pageRequest);
+        }
+    }
 
     public BeerDto getById(UUID beerId) {
         return beerMapper.beerToBeerDto(beerRepository.findById(beerId).orElseThrow(NotFoundException::new));
