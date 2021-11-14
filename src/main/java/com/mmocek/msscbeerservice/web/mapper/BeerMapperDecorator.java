@@ -5,9 +5,9 @@ import com.mmocek.msscbeerservice.services.BeerInventoryService;
 import com.mmocek.msscbeerservice.web.model.BeerDto;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public abstract class BeerMapperOnHandInventoryDecorator implements BeerWithInventoryMapper {
+public abstract class BeerMapperDecorator implements BeerMapper {
     private BeerInventoryService beerInventoryService;
-    private BeerWithInventoryMapper mapper;
+    private BeerMapper mapper;
 
     @Autowired
     public void setBeerInventoryService(BeerInventoryService beerInventoryService) {
@@ -15,12 +15,12 @@ public abstract class BeerMapperOnHandInventoryDecorator implements BeerWithInve
     }
 
     @Autowired
-    public void setMapper(BeerWithInventoryMapper mapper) {
+    public void setMapper(BeerMapper mapper) {
         this.mapper = mapper;
     }
 
     @Override
-    public BeerDto beerToBeerDto(Beer beer) {
+    public BeerDto beerToBeerDtoWithInventory(Beer beer) {
         BeerDto dto = mapper.beerToBeerDto(beer);
         dto.setQuantityOnHand(beerInventoryService.getOnhandInventory(beer.getId()));
         return dto;

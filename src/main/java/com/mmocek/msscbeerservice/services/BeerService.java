@@ -4,7 +4,6 @@ import com.mmocek.msscbeerservice.domain.Beer;
 import com.mmocek.msscbeerservice.repositories.BeerRepository;
 import com.mmocek.msscbeerservice.web.controller.NotFoundException;
 import com.mmocek.msscbeerservice.web.mapper.BeerMapper;
-import com.mmocek.msscbeerservice.web.mapper.BeerWithInventoryMapper;
 import com.mmocek.msscbeerservice.web.model.BeerDto;
 import com.mmocek.msscbeerservice.web.model.BeerPagedList;
 import com.mmocek.msscbeerservice.web.model.BeerStyleEnum;
@@ -26,8 +25,6 @@ public class BeerService {
     private final BeerRepository beerRepository;
 
     private final BeerMapper beerMapper;
-
-    private final BeerWithInventoryMapper beerWithInventoryMapper;
 
     public BeerPagedList listBeers(String beerName, BeerStyleEnum beerStyle, PageRequest pageRequest,
                                    Boolean showInventoryOnHand) {
@@ -53,14 +50,14 @@ public class BeerService {
 
     private List<BeerDto> mapBeersToDto(List<Beer> beerList, Boolean showInventoryOnHand) {
         if (showInventoryOnHand) {
-            return beerList.stream().map(beerWithInventoryMapper::beerToBeerDto).collect(Collectors.toList());
+            return beerList.stream().map(beerMapper::beerToBeerDtoWithInventory).collect(Collectors.toList());
         }
         return beerList.stream().map(beerMapper::beerToBeerDto).collect(Collectors.toList());
     }
 
     public BeerDto getById(UUID beerId, Boolean showInventoryOnHand) {
         if (showInventoryOnHand) {
-            return beerWithInventoryMapper.beerToBeerDto(
+            return beerMapper.beerToBeerDtoWithInventory(
                     beerRepository.findById(beerId).orElseThrow(NotFoundException::new));
         }
         return beerMapper.beerToBeerDto(beerRepository.findById(beerId).orElseThrow(NotFoundException::new));
