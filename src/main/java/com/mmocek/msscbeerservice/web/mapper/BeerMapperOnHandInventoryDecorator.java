@@ -5,9 +5,9 @@ import com.mmocek.msscbeerservice.services.BeerInventoryService;
 import com.mmocek.msscbeerservice.web.model.BeerDto;
 import org.springframework.beans.factory.annotation.Autowired;
 
-public abstract class BeerMapperDecorator implements BeerMapper {
+public abstract class BeerMapperOnHandInventoryDecorator implements BeerWithInventoryMapper {
     private BeerInventoryService beerInventoryService;
-    private BeerMapper mapper;
+    private BeerWithInventoryMapper mapper;
 
     @Autowired
     public void setBeerInventoryService(BeerInventoryService beerInventoryService) {
@@ -15,7 +15,7 @@ public abstract class BeerMapperDecorator implements BeerMapper {
     }
 
     @Autowired
-    public void setMapper(BeerMapper mapper) {
+    public void setMapper(BeerWithInventoryMapper mapper) {
         this.mapper = mapper;
     }
 

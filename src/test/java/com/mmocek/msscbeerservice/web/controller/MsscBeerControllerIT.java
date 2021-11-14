@@ -14,7 +14,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -32,7 +33,7 @@ public class MsscBeerControllerIT {
     BeerInventoryService beerInventoryService;
 
     @Test
-    void getBeer() throws Exception {
+    void getBeerWithoutInventory() throws Exception {
 
         when(beerInventoryService.getOnhandInventory(BeerLoader.BEER_1_UUID)).thenReturn(75);
         MvcResult mvcResult = mockMvc
@@ -41,8 +42,25 @@ public class MsscBeerControllerIT {
                 .andReturn();
 
         BeerDto beerDto = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), BeerDto.class);
+        assertThat(beerDto.getQuantityOnHand()).isEqualTo(null);
+        assertThat(beerDto.getBeerName()).isEqualTo("Mango Bobs");
+        verify(beerInventoryService, never()).getOnhandInventory(any());
+    }
+
+    @Test
+    void getBeerWithInventory() throws Exception {
+
+        when(beerInventoryService.getOnhandInventory(BeerLoader.BEER_1_UUID)).thenReturn(75);
+        MvcResult mvcResult = mockMvc
+                .perform(get("/api/v1/beer/" + BeerLoader.BEER_1_UUID)
+                        .param("showInventoryOnHand", "true")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+
+        BeerDto beerDto = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), BeerDto.class);
         assertThat(beerDto.getQuantityOnHand()).isEqualTo(75);
         assertThat(beerDto.getBeerName()).isEqualTo("Mango Bobs");
-
+        verify(beerInventoryService, times(1)).getOnhandInventory(BeerLoader.BEER_1_UUID);
     }
 }
