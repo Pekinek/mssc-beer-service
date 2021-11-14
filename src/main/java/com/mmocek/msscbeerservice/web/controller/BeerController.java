@@ -24,7 +24,6 @@ public class BeerController {
 
     private final BeerService beerService;
 
-    @Cacheable(cacheNames = "beerListCache", condition = "#showInventoryOnHand == false ")
     @GetMapping(produces = {"application/json"})
     public ResponseEntity<BeerPagedList> listBeers(
             @RequestParam(value = "pageNumber", required = false) Integer pageNumber,
@@ -46,7 +45,6 @@ public class BeerController {
         return new ResponseEntity<>(beerList, HttpStatus.OK);
     }
 
-    @Cacheable(cacheNames = "beerCache", key = "#beerId", condition = "#showInventoryOnHand == false ")
     @GetMapping("/{beerId}")
     public ResponseEntity<BeerDto> getBeerById(@PathVariable UUID beerId,
                                                @RequestParam(value = "showInventoryOnHand", required = false,
