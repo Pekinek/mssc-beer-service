@@ -12,14 +12,13 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 import java.util.Objects;
-import java.util.UUID;
 
 @Slf4j
 @ConfigurationProperties(prefix = "sfg.brewery", ignoreUnknownFields = false)
 @Component
 public class BeerInventoryServiceRestTemplate implements BeerInventoryService {
 
-    private final String INVENTORY_PATH = "/api/v1/beer/{beerId}/inventory";
+    private final String INVENTORY_PATH = "/api/v1/beerUpc/{beerUpc}/inventory";
     private final RestTemplate restTemplate;
 
     private String beerInventoryServiceHost;
@@ -33,14 +32,14 @@ public class BeerInventoryServiceRestTemplate implements BeerInventoryService {
     }
 
     @Override
-    public Integer getOnhandInventory(UUID beerId) {
+    public Integer getOnhandInventory(String beerUpc) {
 
         log.debug("Calling Inventory Service");
 
         ResponseEntity<List<BeerInventoryDto>> responseEntity =
                 restTemplate.exchange(beerInventoryServiceHost + INVENTORY_PATH, HttpMethod.GET, null,
                         new ParameterizedTypeReference<List<BeerInventoryDto>>() {
-        }, beerId);
+        }, beerUpc);
 
         return Objects.requireNonNull(responseEntity.getBody()).stream().mapToInt(BeerInventoryDto::getQuantityOnHand).sum();
     }

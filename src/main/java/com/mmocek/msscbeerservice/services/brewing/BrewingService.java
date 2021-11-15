@@ -30,7 +30,7 @@ public class BrewingService {
         List<Beer> beers = beerRepository.findAll();
 
         beers.forEach(beer -> {
-            Integer inventoryOnHond = beerInventoryService.getOnhandInventory(beer.getId());
+            Integer inventoryOnHond = beerInventoryService.getOnhandInventory(beer.getUpc());
 
             log.debug("Minimum on hand is: " + beer.getMinOnHand());
             log.debug("Inventory is: " + inventoryOnHond);
