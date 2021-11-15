@@ -1,8 +1,9 @@
-package com.mmocek.msscbeerservice.services;
+package com.mmocek.msscbeerservice.services.brewing;
 
 import com.mmocek.msscbeerservice.domain.Beer;
 import com.mmocek.msscbeerservice.events.BrewBeerEvent;
 import com.mmocek.msscbeerservice.repositories.BeerRepository;
+import com.mmocek.msscbeerservice.services.BeerInventoryService;
 import com.mmocek.msscbeerservice.web.mapper.BeerMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
