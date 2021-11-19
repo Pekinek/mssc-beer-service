@@ -1,4 +1,4 @@
-package com.mmocek.msscbeerservice.web.model;
+package com.mmocek.commons.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

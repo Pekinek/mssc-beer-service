@@ -1,6 +1,6 @@
-package com.mmocek.msscbeerservice.events;
+package com.mmocek.commons.model.events;
 
-import com.mmocek.msscbeerservice.web.model.BeerDto;
+import com.mmocek.commons.model.BeerDto;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor

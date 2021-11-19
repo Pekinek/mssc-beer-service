@@ -1,7 +1,7 @@
 package com.mmocek.msscbeerservice.repositories;
 
 import com.mmocek.msscbeerservice.domain.Beer;
-import com.mmocek.msscbeerservice.web.model.BeerStyleEnum;
+import com.mmocek.commons.model.BeerStyleEnum;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;

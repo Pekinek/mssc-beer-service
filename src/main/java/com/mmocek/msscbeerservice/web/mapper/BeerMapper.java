@@ -1,7 +1,7 @@
 package com.mmocek.msscbeerservice.web.mapper;
 
 import com.mmocek.msscbeerservice.domain.Beer;
-import com.mmocek.msscbeerservice.web.model.BeerDto;
+import com.mmocek.commons.model.BeerDto;
 import org.mapstruct.DecoratedWith;
 import org.mapstruct.Mapper;
 

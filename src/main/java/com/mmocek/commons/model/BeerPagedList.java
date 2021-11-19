@@ -1,4 +1,4 @@
-package com.mmocek.msscbeerservice.web.model;
+package com.mmocek.commons.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

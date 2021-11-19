@@ -2,9 +2,8 @@ package com.mmocek.msscbeerservice.web.controller;
 
 
 import com.mmocek.msscbeerservice.services.BeerService;
-import com.mmocek.msscbeerservice.web.model.BeerDto;
+import com.mmocek.commons.model.BeerDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
