@@ -4,6 +4,7 @@ import com.mmocek.commons.model.BeerInventoryDto;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
@@ -13,12 +14,13 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 import java.util.Objects;
 
+@Profile("!local-discovery")
 @Slf4j
 @ConfigurationProperties(prefix = "sfg.brewery", ignoreUnknownFields = false)
 @Component
 public class BeerInventoryServiceRestTemplate implements BeerInventoryService {
 
-    private final String INVENTORY_PATH = "/api/v1/beerUpc/{beerUpc}/inventory";
+    public final static String INVENTORY_PATH = "/api/v1/beerUpc/{beerUpc}/inventory";
     private final RestTemplate restTemplate;
 
     private String beerInventoryServiceHost;

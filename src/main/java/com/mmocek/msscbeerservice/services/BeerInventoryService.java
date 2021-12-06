@@ -2,5 +2,5 @@ package com.mmocek.msscbeerservice.services;
 
 public interface BeerInventoryService {
 
-    Integer getOnhandInventory(String beerId);
+    Integer getOnhandInventory(String beerUpc);
 }
