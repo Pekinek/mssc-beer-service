@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import java.util.List;
 
-@FeignClient(name = "beer-inventory-service")
+@FeignClient(name = "beer-inventory-service", fallback = InventoryServiceFeignClientFailover.class)
 public interface BeerInventoryServiceFeignClient {
 
     @RequestMapping(method = RequestMethod.GET, value = BeerInventoryServiceRestTemplate.INVENTORY_PATH)
