@@ -12,6 +12,7 @@ import java.util.List;
 @FeignClient(name = "beer-inventory-service", fallback = InventoryServiceFeignClientFailover.class)
 public interface BeerInventoryServiceFeignClient {
 
+
     @RequestMapping(method = RequestMethod.GET, value = BeerInventoryServiceRestTemplate.INVENTORY_PATH)
     ResponseEntity<List<BeerInventoryDto>> getOnhandInventory(@PathVariable String beerUpc);
 }
